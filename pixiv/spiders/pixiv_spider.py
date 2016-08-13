@@ -29,7 +29,10 @@ class PixivSpider(scrapy.Spider):
 
 	def after_login(self,response):
 		
-		yield scrapy.Request(self.make_url(config = "yesterday"),callback = self.get_data)
+		yield scrapy.Request(
+			self.make_url(config = "yesterday"),
+			callback = self.get_data
+			)
 
 	#get postkey in response.
 	def get_postkey(self,response):

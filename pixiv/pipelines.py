@@ -28,7 +28,7 @@ class ImageDownloadPipeline(FilesPipeline):
 						'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0'
 					}
 				)
-	
+	#use id + page num to name file
 	def file_path(self,request,response=None,info=None):
 		media_guid = request.url.split('/')[-1]
 		print media_guid
