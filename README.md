@@ -7,6 +7,7 @@ Pixiv_Spider
 * 功能正在完善中
 
 ##使用说明：
+<b>需要python环境,需要安装Scrapy框架</b><br />
 <b>使用前请填写账号名和密码。</b><br />
 编辑pixiv文件夹下的settings.py文件<br />
 PIXIV_ID 是你的账号名<br />
