@@ -26,8 +26,3 @@ class ImageDownloadPipeline(FilesPipeline):
 		print media_guid
 		return 'image/%s' % media_guid
 	
-	def item_completed(self,results,item,info):
-		image_paths = [x['path'] for ok,x in results if ok]
-		if not image_paths:
-			raise DropItem("Item contains no images")
-		return item	

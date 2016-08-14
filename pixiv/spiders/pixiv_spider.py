@@ -16,21 +16,22 @@ class PixivSpider(scrapy.Spider):
 	def parse(self,response):
 	#use postkey and first response to login in.
 		postkey = self.get_postkey(response)
-		return scrapy.FormRequest.from_response(
-			response,
-			formdata = {
-				'pixiv_id':self.settings['PIXIV_ID'],
-				'password':self.settings['PASSWORD'],
-				'captcha':'',
-				'g_recaptcha_response':'',
-				'post_key':postkey,
-				'source':'pc'
-			},
-			callback = self.after_login	
-		)
-
+		if self.settings['PASSWORD'] and self.settings['PIXIV_ID']:
+			return scrapy.FormRequest.from_response(
+				response,
+				formdata = {
+					'pixiv_id':self.settings['PIXIV_ID'],
+					'password':self.settings['PASSWORD'],
+					'captcha':'',
+					'g_recaptcha_response':'',
+					'post_key':postkey,
+					'source':'pc'
+				},
+				callback = self.after_login	
+			)
+		else:
+			print "plz check setting id and password"
 	def after_login(self,response):
-		
 		url = "http://www.pixiv.net/ranking.php?mode=daily&date=%s"%(self.settings['YESTERDAY'])
 		yield scrapy.Request(url,callback = self.get_data)
 
@@ -107,28 +108,28 @@ class PixivSpider(scrapy.Spider):
 		item = response.meta['item']
 		item['image_referer'] = response.url
 				
-		if item["illust_type"] == "single":
-			item["image_url"] = response.xpath('//img[@class="original-image"]/@data-src').extract()
+#		if item["illust_type"] == "single":
+#			item["image_url"] = response.xpath('//img[@class="original-image"]/@data-src').extract()
 
-		if item["illust_type"] == "multiple":
-			page = response.xpath('//span[@class="total"]/text()').extract()[0]
-			url = re.sub("manga","manga_big",response.url) + '&page=0'
-			yield scrapy.Request(
-					url,
-					meta ={'item':item,'page':page},
-					callback = self.make_url
-			)
+#		if item["illust_type"] == "multiple":
+#			page = response.xpath('//span[@class="total"]/text()').extract()[0]
+#			url = re.sub("manga","manga_big",response.url) + '&page=0'
+#			yield scrapy.Request(
+#					url,
+#					meta ={'item':item,'page':page},
+#					callback = self.make_url
+#			)
+#
+#		if item["illust_type"] == "manga":
+#			item["image_url"] = response.xpath('//img/@src').extract()
 
-		if item["illust_type"] == "manga":
-			item["image_url"] = response.xpath('//img/@src').extract()
-
-		if item["illust_type"] == "video":
+		if item["illust_type"] == "ugoku":
 			findzip =[zip for zip in response.xpath('//script').extract() if 'ugokuIllust' in zip]
 			result = re.compile('ugokuIllustFullscreenData.*?:"(.*?)",').search(findzip[0]).group(1)
 			#result like this -> http:\/\/i1.pixiv.net\/img-zip-ugoira\/img\/2016\/08\/08\/22\/42\/55\/58329284_ugoira1920x1080.zip
 			#we need  process it
-			item["image_url"] = re.sub(r"\\","",result)
-
+			item["image_url"] = [re.sub(r"\\","",result)]
+			print item["image_url"]
 		if item["illust_type"] == "multiple rtl":
 			pass
 		try:		
