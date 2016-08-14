@@ -108,20 +108,20 @@ class PixivSpider(scrapy.Spider):
 		item = response.meta['item']
 		item['image_referer'] = response.url
 				
-#		if item["illust_type"] == "single":
-#			item["image_url"] = response.xpath('//img[@class="original-image"]/@data-src').extract()
+		if item["illust_type"] == "single":
+			item["image_url"] = response.xpath('//img[@class="original-image"]/@data-src').extract()
 
-#		if item["illust_type"] == "multiple":
-#			page = response.xpath('//span[@class="total"]/text()').extract()[0]
-#			url = re.sub("manga","manga_big",response.url) + '&page=0'
-#			yield scrapy.Request(
-#					url,
-#					meta ={'item':item,'page':page},
-#					callback = self.make_url
-#			)
-#
-#		if item["illust_type"] == "manga":
-#			item["image_url"] = response.xpath('//img/@src').extract()
+		if item["illust_type"] == "multiple":
+			page = response.xpath('//span[@class="total"]/text()').extract()[0]
+			url = re.sub("manga","manga_big",response.url) + '&page=0'
+			yield scrapy.Request(
+					url,
+					meta ={'item':item,'page':page},
+					callback = self.make_url
+			)
+
+		if item["illust_type"] == "manga":
+			item["image_url"] = response.xpath('//img/@src').extract()
 
 		if item["illust_type"] == "ugoku":
 			findzip =[zip for zip in response.xpath('//script').extract() if 'ugokuIllust' in zip]
