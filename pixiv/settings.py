@@ -14,7 +14,7 @@ PASSWORD = ''#your pixiv password
 
 #Get Yesterday
 
-YESTERDAY = str(int(time.strftime("%Y%m%d",time.localtime(time.time())))-3)
+YESTERDAY = str(int(time.strftime("%Y%m%d",time.localtime(time.time())))-1)
 
 #set media pipeline
 
