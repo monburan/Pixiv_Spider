@@ -11,20 +11,12 @@ from scrapy.exceptions import DropItem
 
 class ImageDownloadPipeline(FilesPipeline):
 	def get_media_requests(self,item,info):
-		if 'video_zip' in item.keys():
-			yield scrapy.Request(
-				item['video_zip'],
-				headers = {
-					'Referer':item['referer_url'],
-					'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0'
-				}
-			)
 		if 'image_url' in item.keys():
 			for image_url in item['image_url']:
 				yield scrapy.Request(
 					image_url,
 					headers = {
-						'Referer':item['referer_url'],
+						'Referer':item['image_referer'],
 						'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0'
 					}
 				)

@@ -9,8 +9,8 @@ NEWSPIDER_MODULE = 'pixiv.spiders'
 
 #Pixiv Login Data
 
-PIXIV_ID = ''#your pixiv id
-PASSWORD = ''#your pixiv password
+PIXIV_ID = 'joker012'#your pixiv id
+PASSWORD = 'monburan012'#your pixiv password
 
 #Get Yesterday
 
@@ -20,7 +20,7 @@ YESTERDAY = str(int(time.strftime("%Y%m%d",time.localtime(time.time())))-1)
 
 ITEM_PIPELINES = {'pixiv.pipelines.ImageDownloadPipeline': 1}
 
-LOG_LEVEL = "DEBUG"
+LOG_LEVEL = "ERROR"
 
 FILES_STORE = os.getcwd()+'/'
 
