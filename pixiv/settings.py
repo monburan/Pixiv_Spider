@@ -7,22 +7,25 @@ BOT_NAME = 'pixiv'
 SPIDER_MODULES = ['pixiv.spiders']
 NEWSPIDER_MODULE = 'pixiv.spiders'
 
-#Pixiv Login Data
+# Pixiv Login Data
 
-PIXIV_ID = ''#your pixiv id
-PASSWORD = ''#your pixiv password
+# your pixiv id
+PIXIV_ID = ''
 
-#Get Yesterday
+# your pixiv password
+PASSWORD = ''
 
-YESTERDAY = str(int(time.strftime("%Y%m%d",time.localtime(time.time())))-1)
+# Get Yesterday
 
-#set media pipeline
+YESTERDAY = str(int(time.strftime("%Y%m%d", time.localtime(time.time()))) - 1)
+
+# set media pipeline
 
 ITEM_PIPELINES = {'pixiv.pipelines.ImageDownloadPipeline': 1}
 
 LOG_LEVEL = "ERROR"
 
-FILES_STORE = os.getcwd()+'/'
+FILES_STORE = os.getcwd() + '/'
 
-#set download
+# set download
 DOWNLOAD_DELAY = '1'
