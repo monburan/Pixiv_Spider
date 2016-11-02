@@ -3,7 +3,9 @@ import scrapy
 
 
 class Rank(scrapy.Item):
-
+    """
+    this is a item to save pic info
+    """
     data_title = scrapy.Field()
     data_rank = scrapy.Field()
     data_score = scrapy.Field()

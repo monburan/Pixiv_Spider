@@ -33,7 +33,7 @@ class PixivSpider(scrapy.Spider):
             print "plz check setting id and password"
 
     def after_login(self, response):
-        url = "http://www.pixiv.net/ranking.php?mode=daily&date=%s" %(self.settings['YESTERDAY'])
+        url = "http://www.pixiv.net/ranking.php?mode=daily&date=%s" % (self.settings['YESTERDAY'])
         yield scrapy.Request(url, callback=self.get_data)
 
     def get_postkey(self, response):
